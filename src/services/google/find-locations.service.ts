@@ -9,7 +9,7 @@ interface Params {
   query: string;
 }
 
-export async function getTouristLocations(params: Params) {
+export const getTouristLocations = async (params: Params) => {
   const { language, cityName, query } = params;
 
   try {
@@ -36,4 +36,4 @@ export async function getTouristLocations(params: Params) {
     console.error("Помилка при отриманні даних з Google API:", error.message);
     return [];
   }
-}
+};
