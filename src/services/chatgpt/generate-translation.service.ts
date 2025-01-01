@@ -6,7 +6,7 @@ const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
 });
 
-export const generateDescription = async (params: ChatParamsModel) => {
+async function generateTranlsation(params: ChatParamsModel) {
   const { prompt, chatModel, content } = params;
 
   try {
@@ -19,8 +19,7 @@ export const generateDescription = async (params: ChatParamsModel) => {
         },
         { role: "user", content: prompt },
       ],
-      max_tokens: 4500,
-      temperature: 0.3,
+      temperature: 0.7,
     });
 
     return response.choices[0].message.content.trim();
@@ -28,4 +27,4 @@ export const generateDescription = async (params: ChatParamsModel) => {
     console.log(error);
     return null;
   }
-};
+}

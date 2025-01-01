@@ -1,15 +1,10 @@
 import axios from "axios";
+import { GoogleParamsModel } from "../../models/google.model";
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const baseUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
 
-interface Params {
-  language: string;
-  cityName: string;
-  query: string;
-}
-
-export const getTouristLocations = async (params: Params) => {
+export const getTouristLocations = async (params: GoogleParamsModel) => {
   const { language, cityName, query } = params;
 
   try {
