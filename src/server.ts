@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { locationRouter } from "./routes/location.route";
+import { locationRouter } from "./routers/location.router";
 
 dotenv.config();
 
