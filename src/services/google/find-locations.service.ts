@@ -1,18 +1,23 @@
 import axios from "axios";
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-const LANGUAGE = config.language;
-const CITY = config.cityName;
-const QUERY = "туристичні локації";
-const URL = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
+const baseUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
 
-export async function getTouristLocations() {
+interface Params {
+  language: string;
+  cityName: string;
+  query: string;
+}
+
+export async function getTouristLocations(params: Params) {
+  const { language, cityName, query } = params;
+
   try {
-    const response = await axios.get(URL, {
+    const response = await axios.get(baseUrl, {
       params: {
-        query: `${QUERY} ${CITY}`,
+        query: `${query} ${cityName}`,
         key: GOOGLE_API_KEY,
-        language: LANGUAGE,
+        language: language,
       },
     });
 
