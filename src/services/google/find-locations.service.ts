@@ -32,7 +32,7 @@ export async function getTouristLocations(params: Params) {
     }));
 
     return places;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Помилка при отриманні даних з Google API:", error.message);
     return [];
   }
