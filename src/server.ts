@@ -1,6 +1,7 @@
 import express, { Express, Request, Response, Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { locationRouter } from "./routes/location.route";
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ const port = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/api", () => {});
+app.use("/api", locationRouter);
 
 const server = () => {
   try {
