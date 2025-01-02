@@ -4,7 +4,7 @@ import {generateDescription, generateTranslation} from "../services/open-ai.serv
 import {saveToExcel} from "../utils/excel.util";
 import {locationConfig} from "../configs/location.config";
 
-export async function generateTouristLocations(req: Request, res: Response) {
+export async function generateTouristLocations(req: Request, res: Response): Promise<void> {
     const {cityName, translationPrompt, descriptionPrompt, model, language} = req.body;
 
     if(!cityName ||  !translationPrompt || !descriptionPrompt || !model || !language) {
