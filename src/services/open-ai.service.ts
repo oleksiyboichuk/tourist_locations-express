@@ -1,7 +1,6 @@
 import {OpenAI} from "openai";
 import {ChatParams} from "../models/chat.model";
-import {config} from "../configs/chat.config";
-import {locationConfig} from "../configs/location.config";
+import {chatConfig} from "../configs/chat.config";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -18,7 +17,7 @@ export async function generateDescription(params: ChatParams){
             messages: [
                 {
                     role: "system",
-                    content: config.descriptionContent
+                    content: chatConfig.descriptionContent
                 },
                 { role: "user", content: prompt },
             ],
@@ -40,7 +39,7 @@ export async function generateTranslation(params: ChatParams) {
             messages: [
                 {
                     role: "system",
-                    content: config.translationContent
+                    content: chatConfig.translationContent
                 },
                 { role: "user", content: prompt },
             ],
