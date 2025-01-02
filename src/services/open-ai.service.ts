@@ -1,5 +1,5 @@
 import {OpenAI} from "openai";
-import {ChatParams} from "../models/chat.model";
+import {ChatDescriptionParams, ChatParams, ChatTranslationParams} from "../models/chat.model";
 import {chatConfig} from "../configs/chat.config";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -8,7 +8,7 @@ const openai = new OpenAI({
     apiKey: OPENAI_API_KEY,
 });
 
-export async function generateDescription(params: ChatParams){
+export async function generateDescription(params: ChatDescriptionParams){
     const {prompt, chatModel} = params;
 
     const newPrompt = prompt;
@@ -33,7 +33,7 @@ export async function generateDescription(params: ChatParams){
     }
 }
 
-export async function generateTranslation(params: ChatParams) {
+export async function generateTranslation(params: ChatTranslationParams) {
     const {prompt, chatModel} = params;
     try {
         const response = await openai.chat.completions.create({

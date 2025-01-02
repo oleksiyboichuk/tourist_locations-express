@@ -16,21 +16,19 @@ export async function generateTouristLocations(req: Request, res: Response): Pro
         const result = [];
 
         for (let location of locations) {
-            const descriptionParams = {
+            const params = {
                 chatModel: model,
-                prompt: descriptionPrompt,
                 locationName: location.name,
-                locationAddress: location.address,
-                cityName,
                 language: "uk"
+            }
+            const descriptionParams = {
+                prompt: descriptionPrompt,
+                cityName,
             }
 
             const translationParams = {
-                chatModel: model,
                 prompt: translationPrompt,
-                locationName: location.name,
                 locationAddress: location.address,
-                language: "uk"
             }
 
             const description = await generateDescription(descriptionParams);
