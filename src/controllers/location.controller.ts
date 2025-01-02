@@ -21,18 +21,9 @@ export async function generateTouristLocations(req: Request, res: Response): Pro
                 locationName: location.name,
                 language: "uk"
             }
-            const descriptionParams = {
-                prompt: descriptionPrompt,
-                cityName,
-            }
 
-            const translationParams = {
-                prompt: translationPrompt,
-                locationAddress: location.address,
-            }
-
-            const description = await generateDescription(descriptionParams);
-            const translation: any = await generateTranslation(translationParams);
+            const description = await generateDescription({...params, prompt: descriptionPrompt, cityName: cityName});
+            const translation: any = await generateTranslation({...params, prompt: translationPrompt, locationAddress: location.address});
 
             if (description && translation) {
                 const excelParams = {

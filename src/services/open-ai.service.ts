@@ -9,7 +9,7 @@ const openai = new OpenAI({
 });
 
 export async function generateDescription(params: ChatDescriptionParams){
-    const {prompt, chatModel} = params;
+    const {prompt, chatModel, locationName, cityName, language} = params;
 
     const newPrompt = prompt;
 
