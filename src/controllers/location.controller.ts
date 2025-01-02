@@ -18,11 +18,12 @@ export async function generateTouristLocations(req: Request, res: Response) {
         for (let location of locations) {
             const chatParams = {
                 chatModel: model,
+                locationName: location.name,
                 language
             }
 
             const description = await generateDescription({...chatParams, prompt: descriptionPrompt});
-            const translation: any = await generateTranslation({...chatParams, prompt: translationPrompt});
+            const translation: any = await generateTranslation({...chatParams, prompt: translationPrompt, locationAddress: location.address});
 
             if (description && translation) {
                 const excelParams = {
