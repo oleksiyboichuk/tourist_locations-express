@@ -5,9 +5,9 @@ import {saveToExcel} from "../utils/excel.util";
 import {locationConfig} from "../configs/location.config";
 
 export async function generateTouristLocations(req: Request, res: Response): Promise<void> {
-    const {cityName, translationPrompt, descriptionPrompt, model, language} = req.body;
+    const {cityName, translationPrompt, descriptionPrompt, model} = req.body;
 
-    if(!cityName ||  !translationPrompt || !descriptionPrompt || !model || !language) {
+    if(!cityName ||  !translationPrompt || !descriptionPrompt || !model) {
         res.status(400).json({message: "Bad request!"});
     }
 
@@ -18,7 +18,7 @@ export async function generateTouristLocations(req: Request, res: Response): Pro
         for (let location of locations) {
             const chatParams = {
                 chatModel: model,
-                language
+                language: "uk"
             }
 
             const description = await generateDescription({...chatParams, prompt: descriptionPrompt});
