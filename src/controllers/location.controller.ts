@@ -15,6 +15,10 @@ export async function generateTouristLocations(req: Request, res: Response): Pro
         const locations = await getTouristLocations(cityName);
         const result = [];
 
+        if(!locations) {
+            res.status(500).json({message: "No locations found!"});
+        }
+
         for (let location of locations) {
             const params = {
                 chatModel: model,
