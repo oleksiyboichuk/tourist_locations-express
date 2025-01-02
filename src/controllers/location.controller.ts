@@ -15,6 +15,8 @@ export async function generateTouristLocations(req: Request, res: Response): Pro
         const locations = await getTouristLocations(cityName);
         const result = [];
 
+        locations.length = 1;
+
         if(!locations) {
             res.status(500).json({message: "No locations found!"});
         }
