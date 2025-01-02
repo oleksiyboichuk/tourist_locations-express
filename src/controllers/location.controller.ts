@@ -35,7 +35,7 @@ export async function generateTouristLocations(req: Request, res: Response) {
                     CategoryId: config.categoryId,
                 };
 
-                await saveToExcel("tables/interesting-places.xlsx", excelParams);
+                await saveToExcel("../excel/interesting-places.xlsx", excelParams);
                 result.push(excelParams);
             }
         }
