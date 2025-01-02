@@ -1,16 +1,11 @@
-import express, { Application } from "express";
-import cors from "cors";
 import dotenv from "dotenv";
+import app from "./src/app";
 
 dotenv.config();
 
-const app: Application = express();
 const port = process.env.PORT || 8000;
 
-app.use(cors());
-app.use(express.json());
-
-const server = () => {
+const index = () => {
   try {
     app.listen(port, () => {
       console.log(`Server is running at ${port}`);
@@ -20,4 +15,4 @@ const server = () => {
   }
 };
 
-server();
+index();
