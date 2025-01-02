@@ -1,7 +1,8 @@
 import xlsx from 'xlsx';
 import fs from 'fs';
+import {ExcelParams} from "../models/excel.model";
 
-export async function saveToExcel(filePath: string, newLocation: any){
+export async function saveToExcel(filePath: string, newLocation: ExcelParams){
     let workbook;
     let worksheet;
 
