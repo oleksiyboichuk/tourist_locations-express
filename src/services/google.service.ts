@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
-export const getTouristLocations = async (cityName: string, language: string) => {
+export const getTouristLocations = async (cityName: string) => {
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
     const query = 'туристичні локації';
 
@@ -11,7 +11,7 @@ export const getTouristLocations = async (cityName: string, language: string) =>
             params: {
                 query: `${query} ${cityName}`,
                 key: GOOGLE_API_KEY,
-                language: language,
+                language: "uk",
             },
         });
 

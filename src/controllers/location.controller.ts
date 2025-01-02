@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {getTouristLocations} from "../services/google.service";
 import {generateDescription, generateTranslation} from "../services/open-ai.service";
 import {saveToExcel} from "../utils/excel.util";
-import {config} from "../configs/location.config";
+import {locationConfig} from "../configs/location.config";
 
 export async function generateTouristLocations(req: Request, res: Response) {
     const {cityName, translationPrompt, descriptionPrompt, model, language} = req.body;
@@ -27,13 +27,13 @@ export async function generateTouristLocations(req: Request, res: Response) {
 
             if (description && translation) {
                 const excelParams = {
-                    CountryId: config.countryId,
-                    CityId: config.cityId,
+                    CountryId: locationConfig.countryId,
+                    CityId: locationConfig.cityId,
                     AddressMultiLanguage: translation.address,
                     TitleMultiLanguage: translation.name,
                     DescriptionMultiLanguage: description,
                     Location: location.location,
-                    CategoryId: config.categoryId,
+                    CategoryId: locationConfig.categoryId,
                 };
 
                 await saveToExcel("../excel/interesting-places.xlsx", excelParams);

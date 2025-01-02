@@ -1,6 +1,7 @@
 import {OpenAI} from "openai";
 import {ChatParams} from "../models/chat.model";
 import {config} from "../configs/chat.config";
+import {locationConfig} from "../configs/location.config";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
