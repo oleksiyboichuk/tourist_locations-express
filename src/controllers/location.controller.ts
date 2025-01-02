@@ -5,7 +5,11 @@ import {saveToExcel} from "../utils/excel.util";
 import {config} from "../configs/location.config";
 
 export async function generateTouristLocations(req: Request, res: Response) {
-    const {translationPrompt, descriptionPrompt, model, cityName, language} = req.body;
+    const {cityName, translationPrompt, descriptionPrompt, model, language} = req.body;
+
+    if(!cityName ||  !translationPrompt || !descriptionPrompt || !model || !language) {
+        res.status(400).json({message: "Bad request!"});
+    }
 
     try {
         const locations = await getTouristLocations(cityName, language);
@@ -31,7 +35,7 @@ export async function generateTouristLocations(req: Request, res: Response) {
                     CategoryId: config.categoryId,
                 };
 
-                await saveToExcel('tables/interesting-places.xlsx', excelParams);
+                await saveToExcel("tables/interesting-places.xlsx", excelParams);
                 result.push(excelParams);
             }
         }
