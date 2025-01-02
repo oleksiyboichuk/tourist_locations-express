@@ -34,7 +34,10 @@ export async function generateDescription(params: ChatDescriptionParams){
 }
 
 export async function generateTranslation(params: ChatTranslationParams) {
-    const {prompt, chatModel, locationName, locationAddress, language} = params;
+    const {prompt, chatModel, locationName, locationAddress} = params;
+
+    const newPrompt = `${prompt}${locationName},${locationAddress}`;
+
     try {
         const response = await openai.chat.completions.create({
             model: chatModel,
@@ -43,7 +46,7 @@ export async function generateTranslation(params: ChatTranslationParams) {
                     role: "system",
                     content: chatConfig.translationContent
                 },
-                { role: "user", content: prompt },
+                { role: "user", content: newPrompt },
             ],
             temperature: 0.7,
         });
