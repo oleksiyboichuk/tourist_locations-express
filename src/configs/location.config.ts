@@ -19,5 +19,15 @@ export const config = {
             ro: "Description text in Romanian",
             sl: "Description text in Slovenian"
         }
+    },
+    multiDataDescription: {
+        uk: {
+            formatDescription: "Ось формат, якого потрібно притримуватися: ",
+            valueDescription: "Ось значення, які потрібно перекласти: ",
+        },
+        en: {
+            formatDescription: "Here is the format to follow: ",
+            valueDescription: "Here are the values to translate: ",
+        },
     }
 }
