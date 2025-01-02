@@ -1,4 +1,4 @@
-export interface ChatParams {
+interface ChatParams {
     chatModel: string;
     locationName: string;
     language: string;
