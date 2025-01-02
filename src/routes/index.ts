@@ -1,5 +1,5 @@
 import {Router} from "express";
-import locationRoutes from "./location";
+import locationRoutes from "./location.route";
 
 const router: Router = Router();
 

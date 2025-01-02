@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {generateTouristLocations} from "../controllers/locationController";
+import {generateTouristLocations} from "../controllers/location.controller";
 
 const router: Router = Router();
 
