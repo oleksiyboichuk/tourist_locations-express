@@ -11,6 +11,8 @@ const openai = new OpenAI({
 export async function generateDescription(params: ChatParams){
     const {prompt, chatModel} = params;
 
+    const newPrompt = prompt;
+
     try {
         const response = await openai.chat.completions.create({
             model: chatModel,
