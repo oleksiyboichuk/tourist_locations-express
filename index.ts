@@ -1,11 +1,10 @@
 import dotenv from "dotenv";
 import app from "./src/app";
 
-dotenv.config();
 
 const port = process.env.PORT || 8000;
 
-const index = () => {
+const server = () => {
   try {
     app.listen(port, () => {
       console.log(`Server is running at ${port}`);
@@ -15,4 +14,4 @@ const index = () => {
   }
 };
 
-index();
+server();

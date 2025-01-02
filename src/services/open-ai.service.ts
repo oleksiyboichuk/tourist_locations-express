@@ -1,6 +1,9 @@
 import {OpenAI} from "openai";
 import {ChatDescriptionParams, ChatTranslationParams} from "../models/chat.model";
 import {chatConfig} from "../configs/chat.config";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -40,7 +43,7 @@ export async function generateTranslation(params: ChatTranslationParams) {
 
     try {
         const response = await openai.chat.completions.create({
-            model: chatModel,
+            model: "gpt-3.5-turbo",
             messages: [
                 {
                     role: "system",

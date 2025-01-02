@@ -1,8 +1,8 @@
 import {Router} from "express";
-import {generateTouristLocations} from "../controllers/location.controller";
+import {locationController} from "../controllers/location.controller";
 
 const router: Router = Router();
 
-router.post("/", generateTouristLocations);
+router.post("/", locationController);
 
 export default router;

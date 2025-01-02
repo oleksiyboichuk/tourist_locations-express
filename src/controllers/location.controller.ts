@@ -4,8 +4,8 @@ import {generateDescription, generateTranslation} from "../services/open-ai.serv
 import {saveToExcel} from "../utils/excel.util";
 import {locationConfig} from "../configs/location.config";
 
-export async function generateTouristLocations(req: Request, res: Response): Promise<void> {
-    const {cityName, translationPrompt, descriptionPrompt, model} = req.body;
+export async function locationController(req: Request, res: Response): Promise<void> {
+    const {cityName, translationPrompt, descriptionPrompt, model} = req.body.params;
 
     if(!cityName ||  !translationPrompt || !descriptionPrompt || !model) {
         res.status(400).json({message: "Bad request!"});
@@ -31,24 +31,33 @@ export async function generateTouristLocations(req: Request, res: Response): Pro
             const description = await generateDescription({...params, prompt: descriptionPrompt, cityName: cityName});
             const translation: any = await generateTranslation({...params, prompt: translationPrompt, locationAddress: location.address});
 
+            console.log('description', description);
+            console.log('translation', translation);
+
+            if(!description || !translation) {
+                res.status(500).json({message: "No locations found!"});
+            }
+
             if (description && translation) {
                 const excelParams = {
                     CountryId: locationConfig.countryId,
                     CityId: locationConfig.cityId,
-                    AddressMultiLanguage: translation.address,
-                    TitleMultiLanguage: translation.name,
-                    DescriptionMultiLanguage: description,
+                    AddressMultiLanguage: JSON.parse(translation).address,
+                    TitleMultiLanguage: JSON.parse(translation).name,
+                    DescriptionMultiLanguage: JSON.parse(description),
                     Location: location.location,
                     CategoryId: locationConfig.categoryId,
                 };
 
-                await saveToExcel("../excel/interesting-places.xlsx", excelParams);
+                console.log('excelParams', excelParams);
+
+                // await saveToExcel("../excel/interesting-places.xlsx", excelParams);
                 result.push(excelParams);
             }
         }
 
         res.status(200).json({data: result});
     } catch (error) {
-        res.status(500).json({message: error});
+        res.status(500).json({message: "Internal server error!"});
     }
 }
