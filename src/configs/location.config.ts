@@ -3,11 +3,21 @@ export const config = {
     cityId: "eeb49ae3-4ba3-4d4b-9f2a-6a07315a5ab3",
     categoryId: "test",
     multiDataFormat: {
-        en: "Текст опису англійською мовою",
-        uk: "Текст опису українською мовою",
-        fr: "Текст опису французькою мовою",
-        pl: "Текст опису польською мовою",
-        ro: "Текст опису румунською мовою",
-        sl: "Текст опису словенською мовою",
+        uk: {
+            en: "Текст опису англійською мовою",
+            uk: "Текст опису українською мовою",
+            fr: "Текст опису французькою мовою",
+            pl: "Текст опису польською мовою",
+            ro: "Текст опису румунською мовою",
+            sl: "Текст опису словенською мовою",
+        },
+        en: {
+            en: "Description text in English",
+            uk: "Description text in Ukrainian",
+            fr: "Description text in French",
+            pl: "Description text in Polish",
+            ro: "Description text in Romanian",
+            sl: "Description text in Slovenian"
+        }
     }
 }
