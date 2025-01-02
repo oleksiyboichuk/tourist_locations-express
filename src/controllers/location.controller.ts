@@ -15,7 +15,7 @@ export async function locationController(req: Request, res: Response): Promise<v
         const locations = await getTouristLocations(cityName);
         const result = [];
 
-        locations.length = 1;
+        locations.length = 10;
 
         if(!locations) {
             res.status(500).json({message: "No locations found!"});
