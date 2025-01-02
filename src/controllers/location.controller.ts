@@ -31,7 +31,7 @@ export async function generateTouristLocations(req: Request, res: Response) {
                     AddressMultiLanguage: translation.address,
                     TitleMultiLanguage: translation.name,
                     DescriptionMultiLanguage: description,
-                    Location: location.Location,
+                    Location: location.location,
                     CategoryId: config.categoryId,
                 };
 

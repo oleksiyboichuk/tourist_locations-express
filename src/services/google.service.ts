@@ -16,10 +16,10 @@ export const getTouristLocations = async (cityName: string, language: string) =>
         });
 
         return response.data.results.map((place: any) => ({
-            Name: place.name,
-            Address: place.formatted_address || '',
-            Type: place.types,
-            Location: {
+            name: place.name,
+            address: place.formatted_address || '',
+            type: place.types,
+            location: {
                 lat: place.geometry.location.lat,
                 lng: place.geometry.location.lng,
             },
