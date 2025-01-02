@@ -8,15 +8,14 @@ export async function generateTouristLocations(req: Request, res: Response) {
 
     try {
         const locations = await getTouristLocations(cityName, language);
-        const processedLocations = [];
+        const result = [];
 
-        for (const location of locations) {
+        for (let location of locations) {
 
             const chatParams = {
-                name: location.name,
-                address: location.address,
                 prompt: prompt,
-                chatModel: model
+                chatModel: model,
+                language
             }
             const description = await generateDescription(chatParams);
             const translation: any = await generateTranslation(chatParams);
@@ -33,11 +32,11 @@ export async function generateTouristLocations(req: Request, res: Response) {
                 };
 
                 await saveToExcel('tables/interesting-places.xlsx', excelParams);
-                processedLocations.push(excelParams);
+                result.push(excelParams);
             }
         }
 
-        res.status(200).json({data: processedLocations});
+        res.status(200).json({data: result});
     } catch (error) {
         res.status(500).json({message: error});
     }
