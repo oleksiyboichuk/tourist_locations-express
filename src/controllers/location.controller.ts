@@ -4,7 +4,7 @@ import {generateDescription, generateTranslation} from "../services/open-ai.serv
 import {saveToExcel} from "../utils/excel.util";
 
 export async function generateTouristLocations(req: Request, res: Response) {
-    const {prompt, model, cityName, countryId, categoryId, language} = req.body;
+    const {translationPrompt, descriptionPrompt, model, cityName, countryId, categoryId, language} = req.body;
 
     try {
         const locations = await getTouristLocations(cityName, language);
@@ -13,12 +13,11 @@ export async function generateTouristLocations(req: Request, res: Response) {
         for (let location of locations) {
 
             const chatParams = {
-                prompt: prompt,
                 chatModel: model,
                 language
             }
-            const description = await generateDescription(chatParams);
-            const translation: any = await generateTranslation(chatParams);
+            const description = await generateDescription({...chatParams, prompt: descriptionPrompt});
+            const translation: any = await generateTranslation({...chatParams, prompt: translationPrompt});
 
             if (description && translation) {
                 const excelParams = {
