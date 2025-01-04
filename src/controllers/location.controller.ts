@@ -5,6 +5,7 @@ import {
   generateTranslation,
 } from "../services/open-ai.service";
 import { locationConfig } from "../configs/location.config";
+import { Location } from "../db/models/Location";
 
 const config = { ...locationConfig };
 
@@ -24,7 +25,7 @@ export async function locationController(
     const locations = await getTouristLocations(cityName);
     const result: any = [];
 
-    locations.length = 5;
+    locations.length = 10;
 
     if (!locations || locations.length === 0) {
       res.status(500).json({ message: "No locations found!" });
@@ -65,12 +66,16 @@ export async function locationController(
       const excelParams = {
         CountryId: config.countryId,
         CityId: config.cityId,
+        CityName: cityName,
         AddressMultiLanguage: JSON.parse(translation).address,
         TitleMultiLanguage: JSON.parse(translation).name,
         DescriptionMultiLanguage: JSON.parse(description),
         Location: location.location,
         CategoryId: config.categoryId,
       };
+
+      const locationRecord = new Location(excelParams);
+      await locationRecord.save();
 
       result.push(excelParams);
     });
