@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import app from "./src/app";
 import mongoose from "mongoose";
 
