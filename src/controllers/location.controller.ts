@@ -62,7 +62,7 @@ export async function locationController(
                 throw new Error("No description or translation found!");
             }
 
-            const excelParams = {
+            const locationParams = {
                 CountryId: config.countryId,
                 CityId: config.cityId,
                 CityName: cityName,
@@ -73,10 +73,10 @@ export async function locationController(
                 CategoryId: config.categoryId,
             };
 
-            const locationRecord = new Location(excelParams);
+            const locationRecord = new Location(locationParams);
             await locationRecord.save();
 
-            result.push(excelParams);
+            result.push(locationParams);
         });
 
         await Promise.all(promises);
