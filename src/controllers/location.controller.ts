@@ -83,7 +83,8 @@ export async function locationController(
 
         await Promise.all(promises);
         const locationCityRecord = new LocationCity({
-            AddedCities: [cityName],
+            CityId: config.cityId,
+            CityName: cityName
         });
         await locationCityRecord.save();
 
