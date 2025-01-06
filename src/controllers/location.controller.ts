@@ -6,6 +6,7 @@ import {
 } from "../services/open-ai.service";
 import { locationConfig } from "../configs/location.config";
 import { Location } from "../db/models/Location";
+import { LocationCity } from "../db/models/location-city";
 
 const config = { ...locationConfig };
 
@@ -25,7 +26,7 @@ export async function locationController(
     const locations = await getTouristLocations(cityName);
     const result: any = [];
 
-    locations.length = 10;
+    locations.length = 1;
 
     if (!locations || locations.length === 0) {
       res.status(500).json({ message: "No locations found!" });
@@ -81,6 +82,10 @@ export async function locationController(
     });
 
     await Promise.all(promises);
+    const locationCityRecord = new LocationCity({
+      AddedCities: [cityName],
+    });
+    await locationCityRecord.save();
 
     res.status(200).json({ data: result });
   } catch (error) {
