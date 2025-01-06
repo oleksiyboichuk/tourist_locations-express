@@ -7,6 +7,7 @@ import {
 import {locationConfig} from "../configs/location.config";
 import {LocationCity} from "../db/models/location-city";
 import {Location} from "../db/models/location";
+import {LocationModel} from "../models/location.model";
 
 const config = {...locationConfig};
 
@@ -24,7 +25,7 @@ export async function locationController(
 
     try {
         const locations = await getTouristLocations(cityName);
-        const result: any = [];
+        let result: LocationModel[] = [];
 
         locations.length = 1;
 
@@ -56,9 +57,6 @@ export async function locationController(
                 descriptionPromise,
                 translationPromise,
             ]);
-
-            console.log("description", description);
-            console.log("translation", translation);
 
             if (!description || !translation) {
                 throw new Error("No description or translation found!");
