@@ -1,15 +1,17 @@
 import { Schema, model, Document } from "mongoose";
 
 interface LocationCityModel extends Document {
-  AddedCities: Array<string>;
+  CityId: string;
+  CityName: string;
 }
 
 const LocationCitySchema: Schema = new Schema<LocationCityModel>({
-  AddedCities: { type: [String], required: true },
+  CityId: { type: String, required: true, unique: true },
+  CityName: { type: String, required: true },
 });
 
 const LocationCity = model<LocationCityModel>(
-  "LocationCity",
+  "Location_City",
   LocationCitySchema,
 );
 
