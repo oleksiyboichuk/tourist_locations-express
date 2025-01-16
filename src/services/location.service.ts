@@ -4,8 +4,10 @@ import {LocationCity} from "../db/models/location-city";
 export async function getLocationByCityName(cityName: string) {
     if (!cityName) return null;
 
+    const correctCityName = decodeURIComponent(cityName);
+
     try {
-        const locations = await Location.find({CityName: cityName.toLowerCase()}).exec();
+        const locations = await Location.find({CityName: correctCityName}).exec();
 
         if (!locations) return null;
 

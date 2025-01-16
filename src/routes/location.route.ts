@@ -3,8 +3,8 @@ import {getCities, getLocations, locationController} from "../controllers/locati
 
 const router: Router = Router();
 
-router.post("/", locationController);
-router.get("/", getLocations);
+router.post("/location", locationController);
+router.get("/location", getLocations);
 router.get("/cities", getCities)
 
 export default router;
