@@ -8,7 +8,7 @@ import {locationConfig} from "../configs/location.config";
 import {LocationCity} from "../db/models/location-city";
 import {Location} from "../db/models/location";
 import {LocationModel} from "../models/location.model";
-import {getLocationByCityName} from "../services/location.service";
+import {getListOfCities, getLocationByCityName} from "../services/location.service";
 
 const config = {...locationConfig};
 
@@ -28,7 +28,7 @@ export async function locationController(
         const locations = await getTouristLocations(cityName);
         let result: LocationModel[] = [];
 
-        locations.length = 1;
+        locations.length = 2;
 
         if (!locations || locations.length === 0) {
             res.status(500).json({message: "No locations found!"});
@@ -94,17 +94,28 @@ export async function locationController(
     }
 }
 
-export async function getLocations(req: Request, res: Response): Promise<void> {
+export async function getLocations(req: Request, res: Response): Promise<any> {
     const {cityName} = req.query as { cityName: string };
 
-    if (cityName) {
+    if (!cityName) {
         res.status(400).json({message: "Bad request"});
     }
 
     try {
         const locations = await getLocationByCityName(cityName);
+        res.status(200).json(locations);
     } catch (error) {
         console.log("Error inside getLocations: ", error);
-        res.send(500).json({message: "Internal server error"});
+        res.status(500).json({message: "Internal server error"});
+    }
+}
+
+export async function getCities(req: Request, res: Response): Promise<any> {
+    try {
+        const citiList = await getListOfCities();
+        res.status(200).json(citiList);
+    } catch (error) {
+        console.log("Error inside getLocations: ", error);
+        res.status(500).json({message: "Internal server error"});
     }
 }
