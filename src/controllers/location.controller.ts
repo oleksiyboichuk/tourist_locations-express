@@ -71,6 +71,7 @@ export async function locationController(
                 TitleMultiLanguage: JSON.parse(translation).name,
                 DescriptionMultiLanguage: JSON.parse(description),
                 Location: location.location,
+                Type: location.type,
                 CategoryId: config.categoryId,
             };
 
