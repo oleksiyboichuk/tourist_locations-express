@@ -1,11 +1,9 @@
 import {OpenAI} from "openai";
 import {ChatDescriptionParams, ChatTranslationParams} from "../models/chat.model";
 import {chatConfig} from "../configs/chat.config";
-import dotenv from "dotenv";
+import {environment} from "../environment";
 
-dotenv.config();
-
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_API_KEY = environment.OPENAI_API_KEY;
 
 const openai = new OpenAI({
     apiKey: OPENAI_API_KEY,

@@ -8,6 +8,7 @@ import {locationConfig} from "../configs/location.config";
 import {LocationCity} from "../db/models/location-city";
 import {Location} from "../db/models/location";
 import {LocationModel} from "../models/location.model";
+import {getLocationByCityName} from "../services/location.service";
 
 const config = {...locationConfig};
 
@@ -90,5 +91,20 @@ export async function locationController(
     } catch (error) {
         console.error(error);
         res.status(500).json({message: "Internal server error!"});
+    }
+}
+
+export async function getLocations(req: Request, res: Response): Promise<void> {
+    const {cityName} = req.query as { cityName: string };
+
+    if (cityName) {
+        res.status(400).json({message: "Bad request"});
+    }
+
+    try {
+        const locations = await getLocationByCityName(cityName);
+    } catch (error) {
+        console.log("Error inside getLocations: ", error);
+        res.send(500).json({message: "Internal server error"});
     }
 }

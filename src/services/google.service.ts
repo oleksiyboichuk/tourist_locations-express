@@ -1,9 +1,7 @@
 import axios from 'axios';
-import dotenv from "dotenv";
+import {environment} from "../environment";
 
-dotenv.config();
-
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+const GOOGLE_API_KEY = environment.GOOGLE_API_KEY;
 
 export const getTouristLocations = async (cityName: string) => {
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
