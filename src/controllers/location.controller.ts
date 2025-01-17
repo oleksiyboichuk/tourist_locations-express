@@ -15,13 +15,12 @@ const config = {...locationConfig};
 export async function locationController(
     req: Request,
     res: Response,
-): Promise<void> {
+): Promise<any> {
     const {cityName, translationPrompt, descriptionPrompt, model} =
         req.body.params;
 
     if (!cityName || !translationPrompt || !descriptionPrompt || !model) {
-        res.status(400).json({message: "Bad request!"});
-        return;
+        return res.status(400).json({message: "Bad request!"});
     }
 
     try {
@@ -31,8 +30,7 @@ export async function locationController(
         locations.length = 2;
 
         if (!locations || locations.length === 0) {
-            res.status(500).json({message: "No locations found!"});
-            return;
+            return res.status(500).json({message: "No locations found!"});
         }
 
         const promises = locations.map(async (location: any) => {
@@ -60,7 +58,7 @@ export async function locationController(
             ]);
 
             if (!description || !translation) {
-                throw new Error("No description or translation found!");
+                return res.status(404).json({message: "No description or translation found"});
             }
 
             const locationParams = {
@@ -88,10 +86,10 @@ export async function locationController(
         });
         await locationCityRecord.save();
 
-        res.status(200).json({data: result});
+        return res.status(200).json({data: result});
     } catch (error) {
         console.error(error);
-        res.status(500).json({message: "Internal server error!"});
+        return res.status(500).json({message: "Internal server error!"});
     }
 }
 
@@ -99,25 +97,25 @@ export async function getLocations(req: Request, res: Response): Promise<any> {
     const {cityName} = req.query as { cityName: string };
 
     if (!cityName) {
-        res.status(400).json({message: "Bad request"});
+        return res.status(400).json({message: "Bad request"});
     }
 
     try {
         const locations = await getLocationByCityName(cityName);
-        res.status(200).json(locations);
+        return res.status(200).json(locations);
     } catch (error) {
         console.log("Error inside getLocations: ", error);
-        res.status(500).json({message: "Internal server error"});
+        return res.status(500).json({message: "Internal server error"});
     }
 }
 
 export async function getCities(req: Request, res: Response): Promise<any> {
     try {
         const citiList = await getListOfCities();
-        res.status(200).json(citiList);
+        return res.status(200).json(citiList);
     } catch (error) {
         console.log("Error inside getLocations: ", error);
-        res.status(500).json({message: "Internal server error"});
+        return res.status(500).json({message: "Internal server error"});
     }
 }
 
@@ -125,19 +123,19 @@ export async function deleteLocation(req: Request, res: Response): Promise<any> 
     const {id} = req.params as {id: string};
 
     if(!id) {
-        res.status(400).json({message: "Bad request"});
+        return res.status(400).json({message: "Bad request"});
     }
 
     try {
-        const deleteLocation = await deleteLocationById(id);
+        const result = await deleteLocationById(id);
 
-        if(!deleteLocation) {
-            res.status(404).json({message: "Location not found"});
+        if(!result) {
+            return res.status(404).json({message: "Location not found"});
         }
 
-        res.status(200).json(deleteLocation);
+        return res.status(200).json(result);
     } catch(error) {
         console.log("Error inside getLocations: ", error);
-        res.status(500).json({message: "Internal server error"});
+        return res.status(500).json({message: "Internal server error"});
     }
 }
