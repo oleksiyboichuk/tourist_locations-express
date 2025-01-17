@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {getTouristLocations} from "../services/google.service";
+import {searchLocationsByGoogle} from "../services/google.service";
 import {
     generateDescription,
     generateTranslation,
@@ -17,6 +17,27 @@ import {
 
 const config = {...locationConfig};
 
+export async function searchLocations(req: Request, res: Response): Promise<any> {
+    const {cityName} = req.query as {cityName: string};
+
+    console.log('cityName', cityName);
+
+    if(!cityName) {
+        return res.status(400).json({message: "Bad request"});
+    }
+
+    try {
+        const locations = await searchLocationsByGoogle(cityName);
+        if(!locations) {
+            return res.status(404).json({message: "Locations not found"});
+        }
+        return res.status(200).json(locations);
+    } catch (error) {
+        console.log("Error inside getLocations: ", error);
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
 export async function generateLocations(
     req: Request,
     res: Response,
@@ -25,11 +46,11 @@ export async function generateLocations(
         req.body.params;
 
     if (!cityName || !translationPrompt || !descriptionPrompt || !model) {
-        return res.status(400).json({message: "Bad request!"});
+        return res.status(400).json({message: "Bad request"});
     }
 
     try {
-        const locations = await getTouristLocations(cityName);
+        const locations = await searchLocationsByGoogle(cityName);
         let result: LocationModel[] = [];
 
         locations.length = 2;

@@ -4,10 +4,12 @@ import {
     getCities,
     getLocations,
     generateLocations,
-    getLocation, updateLocation
+    getLocation, updateLocation, searchLocations
 } from "../controllers/location.controller";
 
 const router: Router = Router();
+
+router.get("/location/search", searchLocations);
 
 router.post("/location", generateLocations);
 router.get("/location", getLocations);
