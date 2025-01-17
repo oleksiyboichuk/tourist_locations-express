@@ -3,9 +3,10 @@ import {environment} from "../environment";
 
 const GOOGLE_API_KEY = environment.GOOGLE_API_KEY;
 
-export const searchLocationsByGoogle = async (cityName: string) => {
+export const searchLocationsByGoogle = async (cityName: string, query: string) => {
+    if(!cityName || !query) return null;
+
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
-    const query = 'туристичні локації';
 
     try {
         const response = await axios.get(url, {
@@ -16,17 +17,12 @@ export const searchLocationsByGoogle = async (cityName: string) => {
             },
         });
 
-        return response.data.results;
-        // return response.data.results.map((place: any) => ({
-        //     name: place.name,
-        //     address: place.formatted_address || '',
-        //     type: place.types,
-        //     location: {
-        //         lat: place.geometry.location.lat,
-        //         lng: place.geometry.location.lng,
-        //     },
-        // }));
+        if(!response) return null;
+
+        return response.data;
+
     } catch (error) {
-        throw new Error(`Google API Error: ${error}`);
+        console.error("Error inside searchLocationsByGoogle", error);
+        return null;
     }
 };
