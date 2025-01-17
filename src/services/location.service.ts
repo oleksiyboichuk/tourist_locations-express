@@ -30,3 +30,18 @@ export async function getListOfCities() {
         return null;
     }
 }
+
+export async function deleteLocationById(id: string): Promise<any | null> {
+    if (!id) return null;
+
+    try {
+        const deleteLocation = await Location.findByIdAndDelete(id);
+
+        if(!deleteLocation) return null;
+
+        return deleteLocation;
+    } catch (error) {
+        console.error("Error inside getLocationByCityName: ", error);
+        return null;
+    }
+}

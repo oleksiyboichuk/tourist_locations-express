@@ -8,7 +8,7 @@ import {locationConfig} from "../configs/location.config";
 import {LocationCity} from "../db/models/location-city";
 import {Location} from "../db/models/location";
 import {LocationModel} from "../models/location.model";
-import {getListOfCities, getLocationByCityName} from "../services/location.service";
+import {deleteLocationById, getListOfCities, getLocationByCityName} from "../services/location.service";
 
 const config = {...locationConfig};
 
@@ -116,6 +116,27 @@ export async function getCities(req: Request, res: Response): Promise<any> {
         const citiList = await getListOfCities();
         res.status(200).json(citiList);
     } catch (error) {
+        console.log("Error inside getLocations: ", error);
+        res.status(500).json({message: "Internal server error"});
+    }
+}
+
+export async function deleteLocation(req: Request, res: Response): Promise<any> {
+    const {id} = req.params as {id: string};
+
+    if(!id) {
+        res.status(400).json({message: "Bad request"});
+    }
+
+    try {
+        const deleteLocation = await deleteLocationById(id);
+
+        if(!deleteLocation) {
+            res.status(404).json({message: "Location not found"});
+        }
+
+        res.status(200).json(deleteLocation);
+    } catch(error) {
         console.log("Error inside getLocations: ", error);
         res.status(500).json({message: "Internal server error"});
     }
