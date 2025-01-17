@@ -12,7 +12,7 @@ import {
     deleteLocationById,
     getListOfCities,
     getLocationByCityName,
-    getLocationById
+    getLocationById, updateLocationById
 } from "../services/location.service";
 
 const config = {...locationConfig};
@@ -134,6 +134,27 @@ export async function getLocation(req: Request, res: Response): Promise<any>{
         return res.status(500).json({message: "Internal server error"});
     }
 
+}
+
+export async function updateLocation(req:Request, res: Response): Promise<any> {
+    const {id} = req.params as {id: string};
+    const location = req.body;
+
+    if(!id || !location) {
+        return res.status(400).json({message: "Bad request"});
+    }
+
+    try {
+        const updatedLocation = await updateLocationById(id, location);
+        if(!updatedLocation) {
+            return res.status(400).json({message: "Bad request"});
+        }
+
+        return res.status(200).json(updatedLocation);
+    } catch(error) {
+        console.log("Error inside getLocations: ", error);
+        return res.status(500).json({message: "Internal server error"});
+    }
 }
 
 export async function deleteLocation(req: Request, res: Response): Promise<any> {

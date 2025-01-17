@@ -4,7 +4,7 @@ import {
     getCities,
     getLocations,
     generateLocations,
-    getLocation
+    getLocation, updateLocation
 } from "../controllers/location.controller";
 
 const router: Router = Router();
@@ -12,6 +12,7 @@ const router: Router = Router();
 router.post("/location", generateLocations);
 router.get("/location", getLocations);
 router.get("/location/:id", getLocation);
+router.patch("/location/:id", updateLocation);
 router.delete("/location/:id", deleteLocation);
 
 router.get("/cities", getCities)
