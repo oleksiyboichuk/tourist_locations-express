@@ -18,13 +18,15 @@ export async function getLocationByCityName(cityName: string) {
     }
 }
 
-export async function getListOfCities() {
+export async function getLocationById(id: string): Promise<any | null> {
+    if (!id) return null;
+
     try {
-        const cities = await LocationCity.find();
+        const location = await Location.findById(id);
 
-        if (!cities) return null;
+        if(!location) return null;
 
-        return cities;
+        return location;
     } catch (error) {
         console.error("Error inside getLocationByCityName: ", error);
         return null;
@@ -40,6 +42,19 @@ export async function deleteLocationById(id: string): Promise<any | null> {
         if(!deleteLocation) return null;
 
         return deleteLocation;
+    } catch (error) {
+        console.error("Error inside getLocationByCityName: ", error);
+        return null;
+    }
+}
+
+export async function getListOfCities() {
+    try {
+        const cities = await LocationCity.find();
+
+        if (!cities) return null;
+
+        return cities;
     } catch (error) {
         console.error("Error inside getLocationByCityName: ", error);
         return null;

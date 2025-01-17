@@ -8,11 +8,16 @@ import {locationConfig} from "../configs/location.config";
 import {LocationCity} from "../db/models/location-city";
 import {Location} from "../db/models/location";
 import {LocationModel} from "../models/location.model";
-import {deleteLocationById, getListOfCities, getLocationByCityName} from "../services/location.service";
+import {
+    deleteLocationById,
+    getListOfCities,
+    getLocationByCityName,
+    getLocationById
+} from "../services/location.service";
 
 const config = {...locationConfig};
 
-export async function locationController(
+export async function generateLocations(
     req: Request,
     res: Response,
 ): Promise<any> {
@@ -109,14 +114,26 @@ export async function getLocations(req: Request, res: Response): Promise<any> {
     }
 }
 
-export async function getCities(req: Request, res: Response): Promise<any> {
+export async function getLocation(req: Request, res: Response): Promise<any>{
+    const {id} = req.params as {id: string};
+
+    if(!id) {
+        return res.status(400).json({message: "Bad request"});
+    }
+
     try {
-        const citiList = await getListOfCities();
-        return res.status(200).json(citiList);
-    } catch (error) {
+        const result = await getLocationById(id);
+
+        if(!result) {
+            return res.status(404).json({message: "Location not found"});
+        }
+
+        return res.status(200).json(result);
+    } catch(error) {
         console.log("Error inside getLocations: ", error);
         return res.status(500).json({message: "Internal server error"});
     }
+
 }
 
 export async function deleteLocation(req: Request, res: Response): Promise<any> {
@@ -135,6 +152,16 @@ export async function deleteLocation(req: Request, res: Response): Promise<any> 
 
         return res.status(200).json(result);
     } catch(error) {
+        console.log("Error inside getLocations: ", error);
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
+export async function getCities(req: Request, res: Response): Promise<any> {
+    try {
+        const citiList = await getListOfCities();
+        return res.status(200).json(citiList);
+    } catch (error) {
         console.log("Error inside getLocations: ", error);
         return res.status(500).json({message: "Internal server error"});
     }
