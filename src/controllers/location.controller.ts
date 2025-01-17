@@ -18,7 +18,7 @@ import {
 const config = {...locationConfig};
 
 export async function searchLocations(req: Request, res: Response): Promise<any> {
-    const {cityName, query} = req.query as {cityName: string, query: string};
+    const {cityName, query, next} = req.query as {cityName: string, query: string, next: string};
 
     console.log('cityName', cityName);
     console.log('query', query);
@@ -28,7 +28,7 @@ export async function searchLocations(req: Request, res: Response): Promise<any>
     }
 
     try {
-        const locations = await searchLocationsByGoogle(cityName, query);
+        const locations = await searchLocationsByGoogle(cityName, query, next);
         if(!locations) {
             return res.status(404).json({message: "Locations not found"});
         }
